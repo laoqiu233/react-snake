@@ -164,6 +164,7 @@ export default class Game extends React.Component<RouteComponentProps, GameState
         return (
             <div className={styles.game}>
                 <h1>Game of size {this.state.size}</h1>
+                <h2>Score: {this.state.snake.length}</h2>
                 <div className={styles.blocks}>
                     {blocks}
                 </div>
