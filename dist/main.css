@@ -34,7 +34,7 @@
 
 @font-face {
   font-family: "FunnyFont";
-  src: url(/fonts/YanoneKaffeesatz.ttf) format("truetype");
+  src: url(fonts/YanoneKaffeesatz.ttf) format("truetype");
 }
 * {
   margin: 0;
