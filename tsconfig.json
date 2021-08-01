@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "module": "ES6",
+        "noImplicitAny": true,
+        "sourceMap": true,
+        "jsx": "react",
+        "strict": true,
+        "allowSyntheticDefaultImports": true,
+        "moduleResolution": "node",
+        "plugins": [
+            {
+                "name": "typescript-plugin-css-modules",
+                "options": {
+                    "classnameTransform": "camelCase"
+                }
+            }
+        ]
+    },
+    "include": ["./src/**/*"],
+    "exclude": ["node_modules"]
+}
