@@ -7,7 +7,8 @@ interface GameState {
     size: number,
     snake: number[],
     apple: number,
-    dir: number[]
+    dir: number[],
+    loop_id: number
 }
 
 export default class Game extends React.Component<RouteComponentProps, GameState> {
@@ -36,7 +37,8 @@ export default class Game extends React.Component<RouteComponentProps, GameState
             size: size_t,
             snake: [Math.floor(size_t / 2) * size_t + Math.floor(size_t / 2) - 1 + (size_t % 2)],
             apple: (Math.floor(size_t / 2) - 1) * size_t + Math.floor(size_t / 2) - 1 + (size_t % 2),
-            dir: [0, 1]
+            dir: [0, 1],
+            loop_id: 0
         };
 
         this.loop = this.loop.bind(this);
@@ -47,7 +49,9 @@ export default class Game extends React.Component<RouteComponentProps, GameState
     }
 
     componentDidMount() {
-        setInterval(this.loop, 300);
+        this.setState({
+            loop_id: window.setTimeout(this.loop, 300)
+        });
 
         document.addEventListener('keydown', this.handleKeys);
     }
@@ -99,6 +103,7 @@ export default class Game extends React.Component<RouteComponentProps, GameState
         }
 
         this.setState({
+            loop_id: window.setTimeout(this.loop, 300),
             snake: new_snake
         });
     }
@@ -126,6 +131,9 @@ export default class Game extends React.Component<RouteComponentProps, GameState
                 });
                 break;
         }
+
+        window.clearTimeout(this.state.loop_id);
+        this.loop();
     }
 
     render() {
