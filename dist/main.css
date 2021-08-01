@@ -1,0 +1,47 @@
+._Nk5f9key7rE351jkXLW {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+.g7jr9Fw3ls5Ax2kN02hT {
+  display: flex;
+  flex-flow: column nowrap;
+}
+.h4aAtKDKO4DpHr_93W3y {
+  display: flex;
+  flex-flow: row nowrap;
+}
+.tT59fw50tj3oBVS3JSnE {
+  display: inline-block;
+  margin: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  background-color: #a5a5a5;
+}
+.tT59fw50tj3oBVS3JSnE.btP7b0YzbHdhz7_zahCY {
+  background-color: #ff6868;
+}
+.tT59fw50tj3oBVS3JSnE._DWdeNEiCWEtYPwtwRA4 {
+  background-color: #a0ff69;
+}
+.tT59fw50tj3oBVS3JSnE._DWdeNEiCWEtYPwtwRA4.plPB362_2n7L8adOCvUD {
+  background-color: #55e800;
+}
+
+@font-face {
+  font-family: "FunnyFont";
+  src: url(/fonts/YanoneKaffeesatz.ttf) format("truetype");
+}
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "FunnyFont";
+}
+h1 {
+  margin-bottom: 10px;
+}
+
