@@ -19,6 +19,10 @@
 }
 
 .block {
+    @block: #a5a5a5;
+    @apple: #ff6868;
+    @snake-body: #a0ff69;
+
     display: inline-block;
     margin: 3px;
     width: 20px;
@@ -26,13 +30,17 @@
 
     border-radius: 3px;
 
-    background-color: #7e7e7e;
+    background-color: @block;
 
     &.apple {
-        background-color: #ff6868;
+        background-color: @apple;
     }
 
     &.snake {
-        background-color: #a0ff69;
+        background-color: @snake-body;
+
+        &.snake-head {
+            background-color: darken(@snake-body, 25%);
+        }
     }
 }

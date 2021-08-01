@@ -148,7 +148,12 @@ export default class Game extends React.Component<RouteComponentProps, GameState
                 row.push(
                     <div 
                         key={pos} 
-                        className={styles.block + (this.state.snake.includes(pos) ? ` ${styles.snake}` : '') + (this.state.apple == pos ? ` ${styles.apple}` : '')} 
+                        className={
+                            styles.block + 
+                            (this.state.snake.includes(pos) ? ` ${styles.snake}` : '') + 
+                            (this.state.snake[this.state.snake.length - 1] == pos ? ` ${styles['snake-head']}` : '') +
+                            (this.state.apple == pos ? ` ${styles.apple}` : '')
+                        }  
                     />
                 )
             }
