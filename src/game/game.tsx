@@ -3,12 +3,58 @@ import {RouteComponentProps} from 'react-router-dom';
 
 import styles from './game.module.less';
 
+interface BlockProps {
+    pos: number,
+    block_type: '' | 'apple' | 'snake' | 'snake-head'
+}
+
+interface BlockState {
+    anim_timeout: number
+}
+
+class Block extends React.Component<BlockProps, BlockState> {
+    constructor(props: BlockProps) {
+        super(props);
+
+        this.state = {
+            anim_timeout: -1
+        };
+    }
+
+    componentDidUpdate(prevProps: BlockProps) {
+        if (prevProps.block_type !== this.props.block_type && ['snake-head', 'apple'].includes(this.props.block_type)) {
+            window.clearTimeout(this.state.anim_timeout);
+
+            this.setState({
+                anim_timeout: window.setTimeout(() => {
+                    this.setState({anim_timeout: -1});
+                }, 150)
+            });
+        }
+    }
+
+    render() {
+        return (
+            <div
+                style={{
+                    boxShadow: (this.state.anim_timeout >= 0 ? '0 0 0 1px' : '0 0 0 0')
+                }}
+                className={
+                    styles.block +
+                    (this.props.block_type !== '' ? ` ${styles[this.props.block_type]}` : '')
+                }
+            />
+        )
+    }
+}
+
 interface GameState {
     size: number,
     snake: number[],
     apple: number,
     dir: number[],
-    loop_id: number
+    loop_id: number,
+    game_over: boolean
 }
 
 export default class Game extends React.Component<RouteComponentProps, GameState> {
@@ -38,7 +84,8 @@ export default class Game extends React.Component<RouteComponentProps, GameState
             snake: [Math.floor(size_t / 2) * size_t + Math.floor(size_t / 2) - 1 + (size_t % 2)],
             apple: (Math.floor(size_t / 2) - 1) * size_t + Math.floor(size_t / 2) - 1 + (size_t % 2),
             dir: [0, 1],
-            loop_id: 0
+            loop_id: 0,
+            game_over: false
         };
 
         this.loop = this.loop.bind(this);
@@ -145,15 +192,17 @@ export default class Game extends React.Component<RouteComponentProps, GameState
             for (let j=0; j<this.state.size; j++) {
                 let pos = i*this.state.size+j
 
+                let block_type:'' | 'apple' | 'snake' | 'snake-head' = '';
+
+                if (this.state.apple == pos) block_type = 'apple';
+                else if (this.state.snake[this.state.snake.length - 1] == pos) block_type = 'snake-head';
+                else if (this.state.snake.includes(pos)) block_type = 'snake';
+
                 row.push(
-                    <div 
-                        key={pos} 
-                        className={
-                            styles.block + 
-                            (this.state.snake.includes(pos) ? ` ${styles.snake}` : '') + 
-                            (this.state.snake[this.state.snake.length - 1] == pos ? ` ${styles['snake-head']}` : '') +
-                            (this.state.apple == pos ? ` ${styles.apple}` : '')
-                        }  
+                    <Block 
+                        key={pos}
+                        pos={pos}
+                        block_type={block_type}
                     />
                 )
             }

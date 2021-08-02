@@ -30,17 +30,27 @@
 
     border-radius: 3px;
 
+    color: @block;
     background-color: @block;
+    box-shadow: 0 0 0 0 @block;
+
+    transition: all 0.1s ease;
 
     &.apple {
+        color: @apple;
         background-color: @apple;
+        box-shadow: 0 0 0 0 @apple;
     }
 
     &.snake {
+        color: @snake-body;
         background-color: @snake-body;
+        box-shadow: 0 0 0 0 @snake-body;
+    }
 
-        &.snake-head {
-            background-color: darken(@snake-body, 25%);
-        }
+    &.snake-head {
+        color: darken(@snake-body, 25%);
+        background-color: darken(@snake-body, 25%);
+        box-shadow: 0 0 0 0 darken(@snake-body, 25%);
     }
 }
