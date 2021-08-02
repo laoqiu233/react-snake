@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {RouteComponentProps} from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
+import { Transition } from 'react-transition-group';
 
 import styles from './game.module.less';
 
@@ -149,6 +150,17 @@ export default class Game extends React.Component<RouteComponentProps, GameState
             });
         }
 
+        // Check for collision
+        if (new_snake.slice(0, -1).includes(new_snake[new_snake.length - 1])) {
+            this.setState({
+                game_over: true
+            });
+
+            document.removeEventListener('keydown', this.handleKeys);
+
+            return;
+        }
+
         this.setState({
             loop_id: window.setTimeout(this.loop, 300),
             snake: new_snake
@@ -210,6 +222,29 @@ export default class Game extends React.Component<RouteComponentProps, GameState
             blocks.push(<div key={i} className={styles['blocks-row']}>{row}</div>)
         }
 
+        const transitionStyles = {
+            entering: {
+                opacity: 1,
+                top: '0'
+            },
+            entered: {
+                opacity: 1,
+                top: '0'
+            },
+            exiting: {
+                opacity: 0,
+                top: '30px'
+            },
+            exited: {
+                opacity: 0,
+                top: '30px'
+            },
+            unmounted: {
+                opacity: 0,
+                top: '30px'
+            }
+        }
+
         return (
             <div className={styles.game}>
                 <h1>Game of size {this.state.size}</h1>
@@ -217,6 +252,27 @@ export default class Game extends React.Component<RouteComponentProps, GameState
                 <div className={styles.blocks}>
                     {blocks}
                 </div>
+                <Transition 
+                    in={this.state.game_over}
+                    timeout={300}
+                >
+                    {
+                        (state) => (
+                            <div
+                                style={{
+                                    position: 'relative',
+                                    marginTop: '10px',
+                                    transition: 'all 500ms ease-out',
+                                    textAlign: 'center',
+                                    ...transitionStyles[state]
+                                }}
+                            >
+                                <h2>Game over!</h2>
+                                <p>pashol nahuj</p>
+                            </div>
+                        )
+                    }
+                </Transition>
             </div>
         )
     }
